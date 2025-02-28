@@ -20,12 +20,8 @@ import pyodbc
 import threading
 from PIL import Image
 import os
-import fitz
 import pytesseract
 import re
-import pyodbc
-import threading
-from PIL import Image
 
 pasta_pedidos = "C:/2 - Boletos"
 
@@ -39,7 +35,7 @@ def iniciar_robo():
     time_long = 8
 
     senha_topmanager = "123456"
-    tempo_espera_max = 30
+    tempo_espera_max = 50
 
     coordenadas = {
         "Movimentos": (147, 34),
