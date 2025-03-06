@@ -1,15 +1,12 @@
 import pyautogui
-import subprocess
 import time
-import pyperclip 
+import pyperclip
 import os
 import logging
 import pygetwindow as gw
 from datetime import datetime, timedelta
 import customtkinter as ctk
 import tkinter as tk
-import os
-import subprocess
 from tkinter import filedialog, messagebox, simpledialog
 import smtplib
 from email.mime.multipart import MIMEMultipart
@@ -18,14 +15,8 @@ from email.mime.base import MIMEBase
 from email import encoders
 import xml.etree.ElementTree as ET
 import fitz
-from PIL import Image
 import re
-import time
-import threading
 import pytesseract
-from pytesseract import image_to_string 
-import numpy as np
-from PIL import ImageEnhance, ImageFilter
 
 def iniciar_robo():
 
@@ -54,10 +45,10 @@ def iniciar_robo():
 
     # Tempos de espera
     time_busca = 0.2
-    time_login = 20
+    time_login = 25
     time_short = 1
     time_medium = 3
-    time_maximizar = 10
+    time_maximizar = 40
     time_long = 8
 
     # Posições dos elementos na tela       
@@ -81,9 +72,9 @@ def iniciar_robo():
     def preencher_campo(texto):
         pyautogui.press("backspace")
         pyautogui.write(texto)
-        
+
+    #Função para maximizar uma janela específica ou clicar no botão de maximizar    
     def maximizar_janela(titulo_parcial):
-    #Função para maximizar uma janela específica ou clicar no botão de maximizar
         try:
             time.sleep(time_maximizar)
             janelas = gw.getWindowsWithTitle(titulo_parcial)
@@ -366,7 +357,7 @@ def iniciar_GUI():
         try:
             remetente = "comunicacao@stik.com.br"
             senha = "Mailstk400"
-            destinatarios = ["joao.silva@stik.com.br", "bruno.costa@stik.com.br"]
+            destinatarios = ["informatica01@stik.com.br"]
             assunto = f"Danfe - {numero_nf_xml} / Stik Elásticos"
 
             for destinatario in destinatarios:
@@ -439,12 +430,12 @@ def iniciar_GUI():
 
     # Função para verificar pedidos e enviar e-mail
     def verificar_pedidos_e_enviar_email():
-        print("Iniciando verificação de pedidos...") 
+        print("Iniciando verificação de pedidos...")
         arquivos = os.listdir(pasta_pedidos)
         pedidos_encontrados = any(arquivo.endswith((".xml", ".pdf")) for arquivo in arquivos)
 
         if pedidos_encontrados:
-            print("Pedidos encontrados. Agrupando e enviando e-mail...") 
+            print("Pedidos encontrados. Agrupando e enviando e-mail...")
             pedidos_por_nf = agrupar_pedidos_por_nf()
 
             pedidos_enviados_com_sucesso = 0
@@ -459,21 +450,15 @@ def iniciar_GUI():
                     pedidos_enviados_com_sucesso += 1
                 else:
                     print(f"Arquivos incompletos para NF-{numero_nf}, não enviados.")
-            
-            if pedidos_enviados_com_sucesso > 0:
-                messagebox.showinfo("Sucesso", f"{pedidos_enviados_com_sucesso} pedido(s) enviado(s) com sucesso!")
-            else:
-                messagebox.showwarning("Aviso", "Nenhum pedido enviado.")
-            
-            time.sleep(2)
 
-            pyautogui.press("enter")
-            
-            root.destroy()
-        else:
-            print("Nenhum pedido encontrado para enviar.")
+            # Fechar a GUI de forma segura
+            try:
+                root.quit()  # Garante o fechamento adequado
+                root.destroy()  # Garantir o encerramento da janela
+            except Exception as e:
+                print(f"Erro ao fechar a GUI: {e}")
 
-    def abrir_pdf_com_acrobat(pdf_path):
+    """def abrir_pdf_com_acrobat(pdf_path):
         try:
             acrobat_path = r"C://Program Files//Adobe//Acrobat DC//Acrobat//Acrobat.exe"
             
@@ -485,7 +470,7 @@ def iniciar_GUI():
             print(f"PDF aberto com sucesso: {pdf_path}")
         
         except Exception as e:
-            print(f"Erro ao abrir o PDF com Acrobat: {e}")
+            print(f"Erro ao abrir o PDF com Acrobat: {e}")"""
 
     def obter_valor_nf_pdf(pdf_path):
         try:
@@ -512,7 +497,7 @@ def iniciar_GUI():
     
     
     # Função para o duplo clique na Listbox
-    def on_double_click(event):
+    """def on_double_click(event):
         selecionado = listbox.get(listbox.curselection())
         if not selecionado:
             return
@@ -523,9 +508,9 @@ def iniciar_GUI():
             selecionados["xml"] = caminho_completo
         elif selecionado.endswith(".pdf"):
             selecionados["pdf"] = caminho_completo
-            abrir_pdf_com_acrobat(caminho_completo)
+            abrir_pdf_com_acrobat(caminho_completo)"""
         
-        atualizar_label_selecionados()
+        #atualizar_label_selecionados()
 
     def atualizar_lista():
         listbox.delete(0, tk.END)
@@ -689,7 +674,7 @@ def iniciar_GUI():
     renomear_pedidos_automatico(pasta_pedidos)
     root.after(2000, verificar_pedidos_e_enviar_email)
     atualizar_lista()
-    listbox.bind("<Double-1>", on_double_click)
+    #listbox.bind("<Double-1>", on_double_click)
     root.mainloop()
 
 def main():
@@ -711,3 +696,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
