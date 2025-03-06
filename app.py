@@ -22,6 +22,23 @@ import pytesseract
 # Função responsavel por todo o processo do download dos arquivos PDF e XML
 def iniciar_robo():
 
+    """# Configurações do logging 
+    base_dir = os.getcwd()  # Obtém o diretório de trabalho atual
+    log_dir = os.path.join(base_dir, 'logs')  # Diretório de logs relativo ao diretório de execução
+
+    # Garantir que o diretório de logs exista
+    if not os.path.exists(log_dir):
+        os.makedirs(log_dir)
+
+    # Configurações do logging 
+    data_hoje = datetime.now().strftime("%d-%m-%Y")
+
+    logging.basicConfig(
+        filename=os.path.join(log_dir, f"log_{data_hoje}.txt"),
+        level=logging.INFO,
+        format="%(asctime)s - %(levelname)s - %(message)s",
+    )"""
+
     senha_topmanager = "123456"
     tempo_espera_max = 30
 
@@ -201,16 +218,10 @@ def iniciar_robo():
             pyautogui.moveTo(coordenadas['periodo'])
             pyautogui.click(button='left')
             time.sleep(time_short)
-            pyautogui.write('p')
+            pyautogui.write('h')
             time.sleep(time_short)
             pyautogui.press("tab")
             time.sleep(time_short)
-            pyautogui.write("21/02/2025")
-            time.sleep(time_short)
-            pyautogui.press("tab")
-            time.sleep(time_short)
-            pyautogui.write("21/02/2025")
-            time.sleep(time_medium)
             pyautogui.press("tab")
             time.sleep(time_short)
             preencher_campo('2')
@@ -239,7 +250,7 @@ def iniciar_robo():
 
         # Configurações e verificação dos pedidos
         pedido_x, pedido_y = coordenadas["N. Pedido Base"]
-        incremento_y = 16  # Distância entre as linhas dos pedidos
+        incremento_y = 18  # Distância entre as linhas dos pedidos
         deslocamento_x = 100  # Ajuste lateral para clicar na opção "Abrir Pedido"
         deslocamento_y = 10   # Pequeno ajuste vertical se necessário
         numero_pedidos = 0
@@ -313,7 +324,7 @@ def iniciar_GUI():
                 print(f"Movido: {arquivo}")
 
     origem = "C://1 - XML e PDF"
-    destino = "C:/1 - XML e PDF/Pedidos Enviados"
+    destino = destino = "C:/1 - XML e PDF/Pedidos Enviados"
 
     def carregar_nfs_enviadas():
         global nfs_enviadas
@@ -461,6 +472,20 @@ def iniciar_GUI():
             except Exception as e:
                 print(f"Erro ao fechar a GUI: {e}")
 
+    """def abrir_pdf_com_acrobat(pdf_path):
+        try:
+            acrobat_path = r"C://Program Files//Adobe//Acrobat DC//Acrobat//Acrobat.exe"
+            
+            if not os.path.exists(acrobat_path):
+                print(f"Erro: O arquivo {acrobat_path} não foi encontrado.")
+                return
+            
+            subprocess.Popen([acrobat_path, pdf_path])
+            print(f"PDF aberto com sucesso: {pdf_path}")
+        
+        except Exception as e:
+            print(f"Erro ao abrir o PDF com Acrobat: {e}")"""
+
     def obter_valor_nf_pdf(pdf_path):
         try:
             extracted_text = ""
@@ -486,6 +511,21 @@ def iniciar_GUI():
             return None
     
     
+    # Função para o duplo clique na Listbox
+    """def on_double_click(event):
+        selecionado = listbox.get(listbox.curselection())
+        if not selecionado:
+            return
+        
+        caminho_completo = os.path.join(pasta_pedidos, selecionado)
+        
+        if selecionado.endswith(".xml"):
+            selecionados["xml"] = caminho_completo
+        elif selecionado.endswith(".pdf"):
+            selecionados["pdf"] = caminho_completo
+            abrir_pdf_com_acrobat(caminho_completo)"""
+        
+        #atualizar_label_selecionados()
 
     def atualizar_lista():
         listbox.delete(0, tk.END)
@@ -570,6 +610,11 @@ def iniciar_GUI():
             except Exception as e:
                 print(f"Erro ao renomear {os.path.basename(caminho_arquivo)}: {e}")
 
+    """def anexar_pedido():
+        if selecionados["xml"] and selecionados["pdf"]:
+            messagebox.showinfo("Sucesso", "Pedidos anexados com sucesso!")
+        else:
+            messagebox.showwarning("Erro", "Selecione um XML e um PDF antes de anexar.")"""
             
     # Função que renomeia os arquivos automaticamente
     def renomear_pedidos_automatico(pasta_pedidos):
@@ -631,12 +676,19 @@ def iniciar_GUI():
     button_selecionar = ctk.CTkButton(button_frame, text="Anexar Pedidos e Enviar", command=enviar_email_com_anexo, width=120)
     button_selecionar.grid(row=0, column=0, padx=5, pady=5)
 
+    """button_anexar = ctk.CTkButton(button_frame, text="Anexar Pedido", command=anexar_pedido, width=120)
+    button_anexar.grid(row=0, column=1, padx=5, pady=5)"""
+
+    """button_enviar_pedido = ctk.CTkButton(button_frame, text="Enviar Pedido", width=120, command=enviar_email_com_anexo)
+    button_enviar_pedido.grid(row=0, column=2, padx=5, pady=5)"""
+
     label_selecionados = ctk.CTkLabel(button_frame, text="XML: Nenhum\nPDF: Nenhum", justify="left", width=40)
     label_selecionados.grid(row=1, column=0, columnspan=3, pady=5)
 
     renomear_pedidos_automatico(pasta_pedidos)
     root.after(2000, verificar_pedidos_e_enviar_email)
     atualizar_lista()
+    #listbox.bind("<Double-1>", on_double_click)
     root.mainloop()
 
 def main():
