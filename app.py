@@ -47,7 +47,7 @@ def iniciar_robo():
 
     # Tempos de espera
     time_busca = 0.2
-    time_login = 25
+    time_login = 35
     time_short = 1
     time_medium = 3
     time_maximizar = 40
@@ -250,7 +250,7 @@ def iniciar_robo():
 
         # Configurações e verificação dos pedidos
         pedido_x, pedido_y = coordenadas["N. Pedido Base"]
-        incremento_y = 18  # Distância entre as linhas dos pedidos
+        incremento_y = 16  # Distância entre as linhas dos pedidos
         deslocamento_x = 100  # Ajuste lateral para clicar na opção "Abrir Pedido"
         deslocamento_y = 10   # Pequeno ajuste vertical se necessário
         numero_pedidos = 0
@@ -324,7 +324,7 @@ def iniciar_GUI():
                 print(f"Movido: {arquivo}")
 
     origem = "C://1 - XML e PDF"
-    destino = destino = "C:/1 - XML e PDF/Pedidos Enviados"
+    destino = "C:/1 - XML e PDF/Pedidos Enviados"
 
     def carregar_nfs_enviadas():
         global nfs_enviadas
