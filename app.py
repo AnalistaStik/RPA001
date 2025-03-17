@@ -48,13 +48,12 @@ def iniciar_robo():
     # Tempos de espera
     time_busca = 0.2
     time_login = 35
-    time_short = 1
-    time_medium = 3
+    time_short = 1.5
+    time_medium = 5
     time_maximizar = 40
     time_long = 8
 
     # Posições dos elementos na tela       
-
     coordenadas = {
         "Consulta": (218, 32),
         "Doc. Eletronico": (252, 56),
@@ -97,10 +96,12 @@ def iniciar_robo():
             time.sleep(time_short)
 
             pyautogui.moveTo(845, 603)
+            time.sleep(time_short)
             pyautogui.click()
             time.sleep(time_short)
             
             pyautogui.moveTo(903, 460)
+            time.sleep(time_short)
             pyautogui.click()
             time.sleep(time_short)
 
@@ -123,9 +124,10 @@ def iniciar_robo():
                 time.sleep(0.2)  
 
             pyautogui.press("enter")  
-            time.sleep(12)
+            time.sleep(16)
 
             pyautogui.moveTo(coordenadas['Pos. Acrobat'])
+            time.sleep(time_short)
             pyautogui.click()
             time.sleep(time_long)
             
@@ -136,10 +138,12 @@ def iniciar_robo():
             time.sleep(time_medium)
 
             # Salvar PDF
-            pyautogui.moveTo(1297, 797)  
+            pyautogui.moveTo(1297, 797)
+            time.sleep(time_short)  
             pyautogui.click()
             time.sleep(time_medium)
             pyautogui.moveTo(571, 48)
+            time.sleep(time_short)
             pyautogui.click()
             time.sleep(time_medium)
             preencher_campo("C:/1 - XML e PDF")
@@ -148,13 +152,16 @@ def iniciar_robo():
             pyautogui.press("enter")
             time.sleep(time_short)
             pyautogui.moveTo(781, 508)
+            time.sleep(time_short)
             pyautogui.click()
             time.sleep(time_short)
             
             pyautogui.moveTo(coordenadas['Fechar_janela_navegador'])
+            time.sleep(time_short)
             pyautogui.click()
             time.sleep(time_long)
             pyautogui.moveTo(coordenadas['Fechar Janela'])
+            time.sleep(time_short)
             pyautogui.click()
             time.sleep(time_long)
             logging.info("PDF baixado com sucesso.")
@@ -196,22 +203,27 @@ def iniciar_robo():
         # Acesso à aba de documentos eletrônicos
         try:
             pyautogui.moveTo(coordenadas['Consulta'])
+            time.sleep(time_short)
             pyautogui.click()
             time.sleep(time_short)
 
             pyautogui.moveTo(coordenadas['Doc. Eletronico'])
+            time.sleep(time_short)
             pyautogui.click()
             time.sleep(time_short)
 
             pyautogui.moveTo(coordenadas['Doc_Eletronico'])
+            time.sleep(time_short)
             pyautogui.click()
             time.sleep(time_short)
 
             pyautogui.moveTo(679, 86)
+            time.sleep(time_short)
             pyautogui.click()
             time.sleep(1)
 
             pyautogui.moveTo(coordenadas['Filtro'])
+            time.sleep(time_short)
             pyautogui.click()
             time.sleep(time_short)
 
@@ -259,6 +271,7 @@ def iniciar_robo():
         while True:
             try:
                 pyautogui.moveTo(pedido_x, pedido_y)
+                time.sleep(time_short)
                 pyautogui.click()
                 time.sleep(time_short)
 
@@ -294,6 +307,7 @@ def iniciar_robo():
         try:
             time.sleep(time_medium)
             pyautogui.moveTo(1895, 10)
+            time.sleep(time_short)
             pyautogui.click()
             logging.info("TopManager fechado com sucesso.")
         except Exception as e:
@@ -371,7 +385,7 @@ def iniciar_GUI():
         try:
             remetente = "comunicacao@stik.com.br"
             senha = "Mailstk400"
-            destinatarios = ["informatica01@stik.com.br"]
+            destinatarios = ["joao.silva@stik.com.br", "bruno.costa@stik.com.br,", "informatica01@stik.com.br"]
             assunto = f"Danfe - {numero_nf_xml} / Stik Elásticos"
 
             for destinatario in destinatarios:
